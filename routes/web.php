@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [TopicController::class,'index']);
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('topic',TopicController::class);
+
+Route::resource('user',UserController::class);
+// Route::resource('comment',CommentController::class);
+
+Route::post('/topic/{topic_id}/comment/{comment_id?}',[CommentController::class,'store'])->name('add_comment');
+Route::get('/topic/{topic_id}/comment/{comment_id?}',[CommentController::class,'show'])->name('show_comment');
