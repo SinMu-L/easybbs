@@ -32,8 +32,12 @@
 
 <div>所有的评论</div>
 <hr>
-{{ $i=1 }}
-@foreach ($topic->comments as $comment)
+
+{{dd($comments)}}
+
+{{-- {{$comments}} --}}
+{{-- {{$i=1}} --}}
+{{-- @foreach ($topic->comments as $comment)
 
     <div class="comment" style="margin-left:{{ 10*$i++ }}px">
         <span><a href="{{ route('user.show',$comment->user->id) }}">{{$comment->user->name}}</a> - {{$comment->created_at}}</span>
@@ -42,6 +46,6 @@
         <br>
         <span><a href="{{ route('add_comment',['topic_id'=>$topic->id,'comment_id'=>$comment->id]) }}">回复</a></span>
     </div>
-@endforeach
+ @endforeach --}}
 
 @endsection

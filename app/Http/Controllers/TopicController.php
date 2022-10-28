@@ -51,7 +51,10 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        return view('topic.topic_show',['topic'=>$topic]);
+        return view('topic.topic_show',[
+            'topic'=>$topic,
+            'comments' => $topic->commentsFlatTree(),
+        ]);
     }
 
     /**

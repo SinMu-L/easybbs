@@ -4,6 +4,7 @@
 无js的论坛
 
 相关资料：https://learnku.com/laravel/t/72462
+
 模仿：https://laravel-agreper.xuchunyang.cn/forum/1/thread/1
 
 前端脚手架:https://learnku.com/docs/laravel/7.x/frontend/7472#33dd85
