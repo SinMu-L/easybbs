@@ -111,6 +111,7 @@
         </nav>
 
         <main class="py-4">
+
             @include('breadcrumbs')
 
             @yield('content')

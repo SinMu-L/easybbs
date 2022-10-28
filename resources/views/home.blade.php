@@ -38,7 +38,7 @@
                         <th><a href="{{ route('user.show',$topic->user->id) }}">{{ $topic->user->name }}</a></th>
                         <th>{{ $topic->created_at }}</th>
                         <th>{{ $topic->updated_at }}</th>
-                        <th>{{ $topic->comment_count }}</th>
+                        <th>{{ $topic->comments->count() }}</th>
                     </tr>
                 </div>
             @endforeach
