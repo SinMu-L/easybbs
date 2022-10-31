@@ -15,9 +15,10 @@ class CreateTopicsTable extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('topic',900)->comment('话题的内容');
+            $table->string('title',900)->comment('话题的标题');
+            $table->text('content')->comment('话题的内容');
             $table->integer('user_id')->comment('用户的id');
-            $table->integer('comment_count')->comment('评论数');
+            $table->integer('comment_count')->default(0)->comment('评论数');
             $table->timestamps();
         });
     }

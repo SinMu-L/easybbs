@@ -15,8 +15,9 @@ class TopicFactory extends Factory
     public function definition()
     {
         return [
-            'topic' => $this->faker->text(10),
-            'user_id' => random_int(1,50),
+            'title' => $this->faker->text(10),
+            'content' => $this->faker->text(100),
+            'user_id' => random_int(1,5),
             'comment_count' => random_int(0,100),
         ];
     }

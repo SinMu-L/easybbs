@@ -3,6 +3,10 @@
 
 @extends('layouts.app')
 
+@section('breadcrumbs')
+    @include('breadcrumbs')
+@endsection
+
 @section('content')
     <h1>回复评论</h1>
 

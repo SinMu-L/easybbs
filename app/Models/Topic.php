@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use BlueM\Tree;
-use Facade\Ignition\Views\Engines\PhpEngine;
+use Carbon\Carbon;
 
 class Topic extends Model
 {
     use HasFactory;
+    public $timestamps = true;
 
-    public $commentStr;
-    public $level = 0;
 
     public function user()
     {
@@ -28,20 +26,7 @@ class Topic extends Model
     {
         $data = $this->comments()->with('user')->get()->toArray();
 
-        // $this->commentStr = '';
-        // $children = [];
-        // $i = 1;
-        // foreach($data as $item){
-        //     $item['t_id'] = $i++;
-        //     $children[$item['pid']][] = $item;
-        // }
 
-
-        // // dd($children);
-        // $this->t($children,0);
-        // // echo $this->commentStr;
-        // dd(123);
-        // return $this->commentStr;
 
         $tree = new \BlueM\Tree($data, ['rootId' => 0, 'parent' => 'pid']);
         $res =  array_map(function (\BlueM\Tree\Node $node) {
@@ -71,5 +56,13 @@ class Topic extends Model
 
     }
 
+    public function getCreatedAtAttribute($date)
+    {
+        if (Carbon::now() < Carbon::parse($date)->addDays(10)) {
+            return Carbon::parse($date);
+        }
+
+        return Carbon::parse($date)->diffForHumans();
+    }
 
 }

@@ -6,6 +6,7 @@ use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
 
 class TopicController extends Controller
 {
@@ -18,8 +19,9 @@ class TopicController extends Controller
     {
         // 返回一个话题列表
         $topics = Topic::with('user')->paginate(5);
+        // dd($topics);
         // $user = Auth::user();
-        return view('home',['topics'=>$topics]);
+        return view('topic.topic_list',['topics'=>$topics]);
     }
 
     /**
@@ -29,7 +31,7 @@ class TopicController extends Controller
      */
     public function create()
     {
-        //
+        return view('topic.topic_create');
     }
 
     /**
@@ -38,9 +40,20 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Topic $topic)
     {
-        //
+
+        $user = Auth::user();
+        $title = htmlspecialchars($request->title);
+        $content = htmlspecialchars($request->content);
+        $topic->title = $title;
+        $topic->content = $content;
+        $topic->user_id = $user->id;
+        $topic->save();
+
+        session()->flash('success','话题创建成功');
+        return Redirect::route('topic.show',$topic->id);
+
     }
 
     /**

@@ -19,6 +19,15 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f2f2e2;
+            margin: 0 0 30px;
+        }
+        main {
+            width: 80%;
+            margin: auto;
+        }
          table {
             border-collapse: collapse;
             width: 100%;
@@ -45,9 +54,21 @@
             border-radius: 5px;
             padding: 8px;
         }
+        .flash.danger {
+            color:red;
+            border-radius: 5px;
+            padding: 8px;
+        }
 
         .page-nav {
             margin: 15px 0;
+        }
+
+        .page-nav > * + *::before {
+            display: inline-block;
+            content: '>';
+            opacity: 0.6;
+            padding: 0 5px;
         }
 
 
@@ -59,7 +80,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Easybbs') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -77,13 +98,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">登录</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">注册</a>
                                 </li>
                             @endif
                         @else
@@ -112,7 +133,8 @@
 
         <main class="py-4">
 
-            @include('breadcrumbs')
+
+            @yield('breadcrumbs')
 
             @yield('content')
         </main>

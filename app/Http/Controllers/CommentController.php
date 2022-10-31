@@ -43,7 +43,7 @@ class CommentController extends Controller
         $user = Auth::user();
         // dd($topic_id,$pid,$user->id,$request->content);
         Comment::create([
-            'content' => $request->content,
+            'content' => htmlspecialchars($request->content),
             'topic_id' => $topic_id,
             'user_id' => $user->id,
             'pid' => $pid,
@@ -65,7 +65,7 @@ class CommentController extends Controller
     {
 
         $comment = Comment::find($comment_id);
-        return view('comment.comment_show',['comment'=>$comment,'topic_id'=>$topic_id]);
+        return view('comment.comment_show',['comment'=>$comment,'topic_id'=>$topic_id,'topic'=>$comment->topic]);
     }
 
     /**
