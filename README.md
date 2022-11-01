@@ -67,12 +67,16 @@
    - 时间显示为 xxx天前
    - 登录注册页面还是自己写
 
+
 总共有4个对象：用户、话题、评论、论坛
 
 论坛(forum_name,description)
+
 话题(topic,author,自动维护创建时间,评论数)
+
 评论(content,topic_id,pid,自动维护时间,user_id)
 
 论坛(1) ---- 话题(n)
+
 话题(1) ---- 评论(n)
 
