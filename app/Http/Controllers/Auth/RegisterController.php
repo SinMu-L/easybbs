@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
+use Ramsey\Uuid\Uuid;
 
 class RegisterController extends Controller
 {
@@ -66,8 +70,50 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'email' => Uuid::uuid1(),
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' => ['required','string','between:3,20'],
+            'password' => ['required','string'],
+        ],[
+            'name.required' => ':attribute 必填项',
+            'name.string' => ':attribute 必须是个字符串',
+            'name.between' => ':attribute 长度必须大于3小于20',
+            'password.required' => ':attribute 必填项',
+            'password.string' => ':attribute 必须是个字符串',
+        ],[
+            'name' => '账号',
+            "password" => "密码"
+        ]);
+
+
+        if ($validator->fails()) {
+            // 返回登录页面，并添加 闪存
+            session()->flash('danger',$validator->errors()->first());
+            return redirect()->route('register');
+        }
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
     }
 }

@@ -6,6 +6,7 @@
 相关资料：https://learnku.com/laravel/t/72462
 
 模仿：https://laravel-agreper.xuchunyang.cn/forum/1/thread/1
+> github源码地址：https://github.com/xuchunyang/laravel-agreper
 
 前端脚手架:https://learnku.com/docs/laravel/7.x/frontend/7472#33dd85
 
@@ -34,3 +35,12 @@
 权限约定
 
 用户只能通过角色来获取到权限，用户不单独拥有权限。例如：用户 sinmu 必须是『管理员』角色，才能行使『管理帖子』权限。
+
+----------
+优化注册页面
+
+添加论坛版块：一个论坛对应多个帖子
+
+后台管理模块
+
+时间显示为 xxx天前

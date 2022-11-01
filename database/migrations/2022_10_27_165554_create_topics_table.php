@@ -19,6 +19,7 @@ class CreateTopicsTable extends Migration
             $table->text('content')->comment('话题的内容');
             $table->integer('user_id')->comment('用户的id');
             $table->integer('comment_count')->default(0)->comment('评论数');
+            $table->integer('forum_id')->comment('论坛的id');
             $table->timestamps();
         });
     }

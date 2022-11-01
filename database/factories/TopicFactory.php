@@ -19,6 +19,7 @@ class TopicFactory extends Factory
             'content' => $this->faker->text(100),
             'user_id' => random_int(1,5),
             'comment_count' => random_int(0,100),
+            'forum_id' => 1,
         ];
     }
 }
