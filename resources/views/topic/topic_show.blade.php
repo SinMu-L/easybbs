@@ -29,7 +29,7 @@
     @include('session_flash')
     <h1>{{ $topic->title }}</h1>
 
-    <div><a href="{{ route('user.show',$topic->user->id) }}">{{$topic->user->name}}</a> - {{$topic->user->created_at}}</div>
+    <div><a href="{{ route('user.show',$topic->user->id) }}">{{$topic->user->name}}</a> - {{$topic->user->created_at->diffForHumans()}}</div>
 
     <div class="markdown">
         {{$topic->content}}
@@ -54,7 +54,7 @@
         <div class="comment"
                     style="margin-left: {{ $comment->depth * 20 }}px">
                     <div>
-                        <a href="{{ route('user.show',$comment->user->id) }}">{{$comment->user->name}}</a> - {{$comment->created_at}}
+                        <a href="{{ route('user.show',$comment->user->id) }}">{{$comment->user->name}}</a> - {{$comment->created_at->diffForHumans()}}
                         <br>
 
                             {!! $comment->content !!}

@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\UserController;
+use App\Models\Forum;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,24 +20,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [TopicController::class,'index']);
+// 注册
+Route::post('/register',[RegisterController::class,'store'])->name('register.store');
+Route::get('/register',[RegisterController::class,'create'])->name('register');
+
+// 登录
+Route::get('/login',[LoginController::class,'create'])->name('login.create');
+Route::post('/login',[LoginController::class,'login'])->name('login.store');
+Route::get('/logout',[LoginController::class,'destroy'])->name('logout');
 
 
 
-Auth::routes();
+Route::get('/', [ForumController::class,'index'])->name('/');
 
-Route::get('/home', [TopicController::class,'index'])->name('home');
 
-Route::resource('topic',TopicController::class);
+
+
+
+Route::get('/home', [ForumController::class,'index'])->name('home');
+
+
+
+Route::resource('topic',TopicController::class)->except(['create']);
 
 Route::resource('user',UserController::class);
-// Route::resource('comment',CommentController::class);
+
 
 Route::post('/topic/{topic_id}/comment/{comment_id?}',[CommentController::class,'store'])->name('add_comment');
 Route::get('/topic/{topic_id}/comment/{comment_id?}',[CommentController::class,'show'])->name('show_comment');
 
 Route::resource('forum',ForumController::class);
 
-Route::get('admin',function(){
-    return view('admin');
-})->name('admin');
+Route::get('forum/{forum_id}/topic',[TopicController::class,'create'])->name('topic.create');

@@ -10,7 +10,7 @@
 @section('content')
     <h1>回复评论</h1>
 
-    <p><a href="{{ route('user.show',$comment->user->id) }}">{{ $comment->user->name }}</a> - {{$comment->created_at}}</p>
+    <p><a href="{{ route('user.show',$comment->user->id) }}">{{ $comment->user->name }}</a> - {{$comment->created_at->diffForHumans()}}</p>
 
     <div>{{$comment->content}}</div>
 

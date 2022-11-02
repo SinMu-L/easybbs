@@ -63,7 +63,7 @@
 -----------------------------------------
 
 ## 开发细节
-   - 评论是无限极评论，评论的展示使用的是这个包`[bluem/tree](https://github.com/BlueM/Tree)`
+   - 评论是无限极评论，评论的展示使用的是这个包[ `bluem/tree` ](https://github.com/BlueM/Tree)
    - 时间显示为 xxx天前
    - 登录注册页面还是自己写
 

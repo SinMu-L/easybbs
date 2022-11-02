@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Forum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ForumController extends Controller
 {
@@ -46,9 +47,22 @@ class ForumController extends Controller
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function show(Forum $forum)
+    public function show($forum_id)
     {
-        //
+
+        $validaor = Validator::make(['forum_id'=>$forum_id],[
+            'forum_id' => ['numeric','exists:forums,id']
+        ]);
+
+        if($validaor->fails()){
+            return redirect(404);
+        }
+
+        $forum = Forum::find($forum_id)->first();
+        return view('topic.topic_list',[
+            'forum' => $forum,
+            'topics' => $forum->topics,
+        ]);
     }
 
     /**

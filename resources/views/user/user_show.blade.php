@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <th>注册时间</th>
-                <th>{{ $user->created_at }}</th>
+                <th>{{ $user->created_at->diffForHumans() }}</th>
             </tr>
 
 

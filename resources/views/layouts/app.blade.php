@@ -9,13 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
@@ -24,46 +17,39 @@
             background-color: #f2f2e2;
             margin: 0 0 30px;
         }
-        main {
-            width: 80%;
-            margin: auto;
+        nav {
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            background-color: #9abef2;
         }
-         table {
-            border-collapse: collapse;
-            width: 100%;
+        nav > * {
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 20px;
+            color: black;
         }
-
-        tr:not(:last-child) {
-            border-bottom: 1px solid;
-        }
-
-        th, td {
+        .logo {
+            margin: 0;
             padding: 5px;
-            text-align: left;
+            padding-left: 15px;
+            font-size: 3em;
+            font-weight: bold;
         }
         a {
             text-decoration: none;
         }
 
-        p {
-            margin-top: 0.7em;
-            margin-bottom: 0.7em;
-        }
-        .flash.success {
-            background-color: lightgreen;
-            border-radius: 5px;
-            padding: 8px;
-        }
-        .flash.danger {
-            color:red;
-            border-radius: 5px;
-            padding: 8px;
+        main {
+            width: 80%;
+            margin: auto;
         }
 
         .page-nav {
             margin: 15px 0;
         }
-
         .page-nav > * + *::before {
             display: inline-block;
             content: '>';
@@ -76,59 +62,31 @@
     @yield('style')
 </head>
 <body>
+
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Easybbs') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+        <nav>
 
-                    </ul>
+            <a class="logo" href="/">{{ config('app.name', 'Laravel') }}</a>
+            <div style="margin:auto"></div>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">登录</a>
-                                </li>
-                            @endif
+            @auth
+                <a href="{{route('user.show',request()->user()->id)}}">{{ request()->user()->name }}</a>
+                <span> | </span>
+                <a href="{{ route('logout') }}">退出</a>
+                <span> | </span>
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">注册</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+            @endauth
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+            @guest
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
+                <a href="{{route('register')}}">注册</a>
+                <span> | </span>
+                <a href="{{ route('login.create') }}">登陆</a>
+                <span> | </span>
+            @endguest
+
+            <a href="#">帮助</a>
         </nav>
 
         <main class="py-4">
