@@ -73,6 +73,10 @@
             @auth
                 <a href="{{route('user.show',request()->user()->id)}}">{{ request()->user()->name }}</a>
                 <span> | </span>
+            @can('admin')
+                <a href="{{ route('admin.index') }}">管理面板</a>
+                <span> | </span>
+            @endcan
                 <a href="{{ route('logout') }}">退出</a>
                 <span> | </span>
 
@@ -86,7 +90,7 @@
                 <span> | </span>
             @endguest
 
-            <a href="#">帮助</a>
+            <a href="{{ route('help') }}">帮助</a>
         </nav>
 
         <main class="py-4">

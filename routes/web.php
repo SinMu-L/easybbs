@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\UserController;
 use App\Models\Forum;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,34 +22,53 @@ use Illuminate\Support\Facades\Route;
 */
 
 // 注册
-Route::post('/register',[RegisterController::class,'store'])->name('register.store');
-Route::get('/register',[RegisterController::class,'create'])->name('register');
+Route::post('/register',[RegisterController::class,'store'])
+    ->middleware('guest')
+    ->name('register.store');
+Route::get('/register',[RegisterController::class,'create'])
+    ->middleware('guest')
+    ->name('register');
 
 // 登录
-Route::get('/login',[LoginController::class,'create'])->name('login.create');
-Route::post('/login',[LoginController::class,'login'])->name('login.store');
-Route::get('/logout',[LoginController::class,'destroy'])->name('logout');
+Route::get('/login',[LoginController::class,'create'])
+    ->middleware('guest')
+    ->name('login.create');
+Route::post('/login',[LoginController::class,'login'])
+    ->middleware('guest')
+    ->name('login.store');
+Route::get('/logout',[LoginController::class,'destroy'])
+    ->middleware('auth')
+    ->name('logout');
 
+// 首页
+Route::get('/', [ForumController::class,'index'])
+    ->name('/');
 
-
-Route::get('/', [ForumController::class,'index'])->name('/');
-
-
-
-
-
-Route::get('/home', [ForumController::class,'index'])->name('home');
-
-
-
+// 话题
 Route::resource('topic',TopicController::class)->except(['create']);
+Route::get('forum/{forum_id}/topic',[TopicController::class,'create'])
+    ->middleware('auth')
+    ->name('topic.create');
+Route::post('/topic/{topic_id}/comment/{comment_id?}',[CommentController::class,'store'])
+    ->middleware('auth')
+    ->name('add_comment');
+Route::get('/topic/{topic_id}/comment/{comment_id?}',[CommentController::class,'show'])
+    ->middleware('auth')
+    ->name('show_comment');
 
+// 用户
 Route::resource('user',UserController::class);
 
-
-Route::post('/topic/{topic_id}/comment/{comment_id?}',[CommentController::class,'store'])->name('add_comment');
-Route::get('/topic/{topic_id}/comment/{comment_id?}',[CommentController::class,'show'])->name('show_comment');
-
+// 论坛版块
 Route::resource('forum',ForumController::class);
 
-Route::get('forum/{forum_id}/topic',[TopicController::class,'create'])->name('topic.create');
+
+
+Route::get('help',function(){
+    return view('help');
+})->name('help');
+
+
+// 管理版块
+
+

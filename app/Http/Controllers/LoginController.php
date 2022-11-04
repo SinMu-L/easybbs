@@ -24,7 +24,7 @@ class LoginController extends Controller
     {
 
         $validator = Validator::make($request->all(),[
-            'name' => ['required','string','unique:users,name'],
+            'name' => ['required','string'],
             'password' => ['required','string']
         ],[
             'name' => '用户名错误',
@@ -35,16 +35,16 @@ class LoginController extends Controller
         ]);
 
         if($validator->fails()){
-            session()->flash('error',$validator->errors()->first());
+            session()->flash('danger',$validator->errors()->first());
             return back();
         }
+
 
         $attemptLogin = Auth::attempt([
             'name' => $request->name,
             'password' => $request->password
         ]);
 
-        // dd($attemptLogin);
 
         if(!$attemptLogin){
             session()->flash('danger','用户名或密码错误');

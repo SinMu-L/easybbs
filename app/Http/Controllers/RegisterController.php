@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -45,11 +44,13 @@ class RegisterController extends Controller
             return redirect('register');
         }
 
-        User::create([
+        $user = User::create([
             'name' => htmlspecialchars($request->name),
             'email' => '',
-            'password' => Hash::make(htmlspecialchars($request->password)),
+            'password' => bcrypt(trim(htmlspecialchars($request->password))),
         ]);
+
+        Auth::login($user);
 
         return redirect('/')->with('success','注册成功');
     }
