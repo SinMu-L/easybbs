@@ -21,7 +21,7 @@
     <h1>管理面板</h1>
     <div class="nav my-4">
         <label for="">
-            <a href="{{ route('admin') }}">管理面板</a> | <a href="{{ route('home') }}">首页</a>
+            <a href="">管理面板</a> | <a href="{{ route('/') }}">首页</a>
         </label>
     </div>
 

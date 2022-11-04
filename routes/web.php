@@ -70,5 +70,15 @@ Route::get('help',function(){
 
 
 // 管理版块
+Route::namespace('Admin')
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function(){
+        Route::get('/panel',function(){
+            return view('admin');
+        })->name('panel');
+});
+
+// 管理版块
 
 

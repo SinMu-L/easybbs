@@ -73,10 +73,11 @@
             @auth
                 <a href="{{route('user.show',request()->user()->id)}}">{{ request()->user()->name }}</a>
                 <span> | </span>
-            @can('admin')
-                <a href="{{ route('admin.index') }}">管理面板</a>
-                <span> | </span>
-            @endcan
+                @if (Auth::user()->hasRole('founder'))
+                    <a href="{{ route('admin.panel') }}">管理面板</a>
+                    <span> | </span>
+                @endif
+
                 <a href="{{ route('logout') }}">退出</a>
                 <span> | </span>
 
