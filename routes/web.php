@@ -73,12 +73,13 @@ Route::get('help',function(){
 Route::namespace('Admin')
     ->prefix('admin')
     ->name('admin.')
+    ->middleware('founder')
     ->group(function(){
         Route::get('/panel',function(){
             return view('admin');
         })->name('panel');
 });
 
-// 管理版块
+
 
 
