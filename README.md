@@ -88,3 +88,61 @@
 后台页面写起来也是体力活儿了。就没有继续写后台了。
 
 说不定后面会有更棒的小伙伴来优化。
+
+
+
+----------------------------------------------------
+
+## 安装并运行
+
+PHP7 +
+
+下载代码
+```shell
+git clone git@github.com:SinMu-L/easybbs.git easybbs
+cd easybbs
+```
+
+安装依赖
+```shell
+composer install
+```
+
+获取本地配置文件
+```shell
+cp .env.example .env
+```
+
+编辑 .env 文件，设置数据库，比如 MySQL
+```shell
+# env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=easybbs
+DB_USERNAME=root
+DB_PASSWORD=123456
+
+```
+
+生成密钥
+```shell
+php artisan key:generate
+```
+
+新建数据库表
+```shell
+php artisan migrate
+```
+
+填充必备的数据，包括设置管理员账户
+```shell
+php artisan db:seed
+
+默认管理员用户名：test ，默认管理员密码：password
+```
+
+运行网站
+```shell
+php artisan serve
+```
