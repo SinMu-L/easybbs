@@ -130,17 +130,14 @@ DB_PASSWORD=123456
 php artisan key:generate
 ```
 
-新建数据库表,如果有红色提示“Migration not found: 2022_11_01_203322_create_forums_table” 之类的问题，忽略就行，不影响最终的效果。issue: https://github.com/laravel/framework/issues/23789
+新建数据库表并填充数据, 如果有红色提示“Migration not found: 2022_11_01_203322_create_forums_table” 之类的问题，忽略就行，不影响最终的效果。issue: https://github.com/laravel/framework/issues/23789
 ```shell
 php artisan migrate_in_order
+
+// 默认管理员用户名：test ，默认管理员密码：password
 ```
 
-填充必备的数据，包括设置管理员账户
-```shell
-php artisan db:seed
 
-默认管理员用户名：test ，默认管理员密码：password
-```
 
 运行网站
 ```shell
