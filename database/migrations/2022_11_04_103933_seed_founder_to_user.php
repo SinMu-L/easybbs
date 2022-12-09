@@ -19,6 +19,7 @@ class SeedFounderToUser extends Migration
 
         // 将 founder 角色分配给 test 用户
         $user = User::where('id','=',1)->first();
+
         $user->assignRole('founder');
     }
     /**

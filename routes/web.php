@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ForumsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\LoginController;
@@ -75,9 +76,8 @@ Route::namespace('Admin')
     ->name('admin.')
     ->middleware('founder')
     ->group(function(){
-        Route::get('/panel',function(){
-            return view('admin');
-        })->name('panel');
+        Route::get('/panel',[ForumsController::class,'index'])->name('panel');
+        Route::post('execsql',[ForumsController::class,'execSQL'])->name('execsql');
 });
 
 

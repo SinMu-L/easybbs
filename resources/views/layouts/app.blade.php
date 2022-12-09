@@ -56,6 +56,9 @@
             opacity: 0.6;
             padding: 0 5px;
         }
+        .flash-message{
+
+        }
 
 
     </style>

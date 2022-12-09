@@ -24,12 +24,12 @@
             <a href="">管理面板</a> | <a href="{{ route('/') }}">首页</a>
         </label>
     </div>
-
+    @include('session_flash')
     <h2>SQL查询</h2>
     <div class="sql-search">
         <div class="waring"> !!! 请确保您已经知道执行 SQL 查询的后果 !!!</div>
         <div class="sql-input">
-            <form action="" method="post">
+            <form action="{{ route('admin.execsql') }}" method="post">
                 @csrf
                 SQL: <input type="text" name="sql">
                 <button type="submit">提交</button>

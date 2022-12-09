@@ -17,7 +17,7 @@ class CommentFactory extends Factory
             'content' => '这里是评论'.$this->faker->text(),
             'topic_id' => random_int(1,5),
             'user_id' => random_int(1,5),
-            'pid' => random_int(1,20),
+            'pid' => random_int(1,6),
         ];
     }
 }
