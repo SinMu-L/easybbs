@@ -137,6 +137,17 @@ php artisan migrate_in_order
 // 默认管理员用户名：test ，默认管理员密码：password
 ```
 
+若遇到错误` Syntax error or access violation: 1071 Specified key was too long; max key length is 1000 bytes `
+那么前往 `config/database.php`文件，更新如下设置
+```php
+'mysql' => [
+    ...,
+    ...,
+    'engine' => 'InnoDB',
+ ]
+```
+
+
 
 
 运行网站
