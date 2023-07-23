@@ -80,6 +80,10 @@ Route::namespace('Admin')
         Route::post('execsql',[ForumsController::class,'execSQL'])->name('execsql');
 });
 
+Route::get('/test',function (){
+   return 134;
+});
+
 
 
 

@@ -77,7 +77,7 @@
                 <a href="{{route('user.show',request()->user()->id)}}">{{ request()->user()->name }}</a>
                 <span> | </span>
                 @if (Auth::user()->hasRole('founder'))
-                    <a href="{{ route('admin.panel') }}">管理面板</a>
+                    <a href="{{ route('dcat.admin.admin_panel') }}">管理面板</a>
                     <span> | </span>
                 @endif
 
