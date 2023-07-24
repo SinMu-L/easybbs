@@ -8,7 +8,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
-class CommentController extends AdminController
+class   CommentController extends AdminController
 {
     /**
      * Make a grid builder.
@@ -17,18 +17,20 @@ class CommentController extends AdminController
      */
     protected function grid()
     {
-        return Grid::make(new Comment(), function (Grid $grid) {
+        return Grid::make(new Comment(['topic','user']), function (Grid $grid) {
+            // 禁用编辑按钮
+            $grid->disableEditButton();
             $grid->column('id')->sortable();
-            $grid->column('content');
-            $grid->column('topic_id');
-            $grid->column('user_id');
-            $grid->column('pid');
-            $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
-        
+            $grid->column('content')->display(function ($v){
+                return mb_substr(html_entity_decode($v),0,10);
+            });
+            $grid->column('topic.title')->setLabel('所属话题');
+            $grid->column('user.name')->setLabel('创建人');
+            $grid->column('created_at')->sortable();
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+
             });
         });
     }
@@ -42,12 +44,13 @@ class CommentController extends AdminController
      */
     protected function detail($id)
     {
-        return Show::make($id, new Comment(), function (Show $show) {
+        return Show::make($id, new Comment(['topic','user']), function (Show $show) {
+            $show->disableEditButton();
+
             $show->field('id');
-            $show->field('content');
-            $show->field('topic_id');
-            $show->field('user_id');
-            $show->field('pid');
+            $show->field('content')->unescape();
+            $show->field('topic.title','所属话题');
+            $show->field('user.name','创建人');
             $show->field('created_at');
             $show->field('updated_at');
         });
@@ -62,11 +65,10 @@ class CommentController extends AdminController
     {
         return Form::make(new Comment(), function (Form $form) {
             $form->display('id');
-            $form->text('content');
+            $form->editor('content');
             $form->text('topic_id');
             $form->text('user_id');
-            $form->text('pid');
-        
+
             $form->display('created_at');
             $form->display('updated_at');
         });

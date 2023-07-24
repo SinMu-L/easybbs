@@ -20,12 +20,14 @@ class TopicController extends AdminController
     protected function grid()
     {
         return Grid::make(Topic::with(['forum','user']), function (Grid $grid) {
+            // 禁用新建按钮
+            $grid->disableCreateButton();
             $grid->column('id')->sortable();
             $grid->column('title');
-            $grid->column('content');
-            $grid->column('user.name');
+            // setLabel 设置列名
+            $grid->column('user.name')->setLabel('创建人');
             $grid->column('comment_count');
-            $grid->column('forum.forum_name');
+            $grid->column('forum.forum_name')->setLabel('所属板块');
             $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
@@ -47,10 +49,11 @@ class TopicController extends AdminController
         return Show::make($id, Topic::with(['forum','user']), function (Show $show) {
             $show->field('id');
             $show->field('title');
-            $show->field('content');
-            $show->field('user.name');
+            // 转移html
+            $show->field('content')->unescape();
+            $show->field('user.name','创建人');
             $show->field('comment_count');
-            $show->field('forum.forum_name');
+            $show->field('forum.forum_name','所属板块');
             $show->field('created_at');
             $show->field('updated_at');
         });
@@ -65,11 +68,10 @@ class TopicController extends AdminController
     {
         return Form::make(Topic::with(['forum']), function (Form $form) {
             $form->display('id');
-            // TODO 这里修改之后会修改 forum 中的 froum_name 字段值 待检查
             $form->select('forum_id')
-                ->options(Forum::class,'id','forum_name')->ajax('/api/forum');
+                ->options(Forum::class,'id', 'forum_name')->ajax('/api/forum');
             $form->text('title');
-            $form->text('content');
+            $form->editor('content');
 
         });
     }

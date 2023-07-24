@@ -5,6 +5,8 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid\Filter;
 use Dcat\Admin\Show;
+use App\Admin\Extensions\Form\WangEditor;
+use Dcat\Admin\Show\Field;
 
 /**
  * Dcat-admin - admin builder based on Laravel.
@@ -24,3 +26,10 @@ use Dcat\Admin\Show;
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
+
+Admin::asset()->alias('@wang-editor',[
+    'js' => 'https://cdn.jsdelivr.net/npm/wangeditor@4.7.1/dist/wangEditor.min.js'
+]);
+
+Form::extend('editor', WangEditor::class);
+

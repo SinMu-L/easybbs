@@ -32,7 +32,7 @@
     <div><a href="{{ route('user.show',$topic->user->id) }}">{{$topic->user->name}}</a> - {{$topic->user->created_at->diffForHumans()}}</div>
 
     <div class="markdown">
-        {{$topic->content}}
+        {!! $topic->content !!}
     </div>
 
     @if (Auth::check())
