@@ -68,7 +68,7 @@
         @endforeach
     @else
         <p>
-            <small>发表评论，请先 <a href="{{ route('register') }}">登陆</a> ！</small>
+            <small>发表评论，请先 <a href="{{ route('login.create') }}">登陆</a> ！</small>
         </p>
     @endif
 

@@ -7,6 +7,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Illuminate\Contracts\Auth\UserProvider;
 
 class   CommentController extends AdminController
 {
@@ -22,7 +23,8 @@ class   CommentController extends AdminController
             $grid->disableEditButton();
             $grid->column('id')->sortable();
             $grid->column('content')->display(function ($v){
-                return mb_substr(html_entity_decode($v),0,10);
+
+                return mb_substr(html_entity_decode($v),0,10) . '...';
             });
             $grid->column('topic.title')->setLabel('所属话题');
             $grid->column('user.name')->setLabel('创建人');
