@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 class CustomLoginController extends Controller
 {
     public function index(Request $request){
@@ -31,17 +32,32 @@ class CustomLoginController extends Controller
                 'Authorization' => 'Bearer '. $access_token
             ])->get('https://api.github.com/user');
             $user = $response->json();
-            // 若此用户已注册，则登录，否则就直接登录
-            $existsed = User::where('name','=',$user['login'])->first();
-            if (!$existsed){
-                $newUser = User::create([
+
+            $name = $user['login'];
+            $existsUser = User::where('name',$name)->first();
+            if ($existsUser){
+                $res  = Auth::attempt([
                     'name' => $user['login'],
-                    'email' => '',
-                    'password'=>bcrypt($user['id'])
+                    'password' => $user['id']
                 ]);
+
+            }else{
+                // 创建用户
+                $user = User::create([
+                    'name' => $user['login'],
+                    'email' => $user['login'],
+                    'password' => $user['id']
+                ]);
+                $res  = Auth::attempt([
+                    'name' => $user['login'],
+                    'password' => $user['id']
+                ]);
+
             }
-            Auth::login($newUser);
-            return redirect('/')->with('success','注册成功');
+            if (!$res){
+                return  '登录出错';
+            }
+            return redirect('/')->with('success','欢迎');
 
         }catch (\Exception $e){
             $error= $e->getMessage();
