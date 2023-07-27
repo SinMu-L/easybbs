@@ -32,7 +32,7 @@
     <div><a href="{{ route('user.show',$topic->user->id) }}">{{$topic->user->name}}</a> - {{$topic->user->created_at->diffForHumans()}}</div>
 
     <div class="markdown">
-        {{$topic->content}}
+        {!! $topic->content !!}
     </div>
 
     @if (Auth::check())
@@ -68,7 +68,7 @@
         @endforeach
     @else
         <p>
-            <small>发表评论，请先 <a href="{{ route('register') }}">登陆</a> ！</small>
+            <small>发表评论，请先 <a href="{{ route('login.create') }}">登陆</a> ！</small>
         </p>
     @endif
 

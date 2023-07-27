@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Dcat\Admin\Traits\HasDateTimeFormatter;
 
 class Topic extends Model
 {
-    use HasFactory;
+    use HasFactory, HasDateTimeFormatter;
     public $timestamps = true;
 
 

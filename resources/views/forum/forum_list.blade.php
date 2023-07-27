@@ -30,7 +30,6 @@
 
 
 @section('content')
-
     @include('session_flash')
     <table>
         <tr>
@@ -39,7 +38,8 @@
         </tr>
         @foreach ($forums as $forum)
             @php
-                $topic = $forum->topics()->latest()->first()
+                $topic = $forum->topics()->latest()->first();
+
             @endphp
             <tr>
                 <th>
@@ -49,11 +49,18 @@
                     </div>
 
                 </th>
+                @if($topic)
                 <th>
                     <p><a href="{{ route('topic.show',$topic->id) }}">{{ $topic->title }}</a></p>
                     <p>{{ $topic->created_at->diffForHumans()}} </p>
                 </th>
+                @else
+                <th>
+                    <p>{{ $forum->created_at->diffForHumans()}} </p>
+                </th>
+                @endif
             </tr>
+
         @endforeach
     </table>
 

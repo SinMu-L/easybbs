@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomLoginController;
 use App\Models\Forum;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,8 @@ Route::post('/login',[LoginController::class,'login'])
 Route::get('/logout',[LoginController::class,'destroy'])
     ->middleware('auth')
     ->name('logout');
+Route::get('/auth/github',[CustomLoginController::class,'index'])
+    ->name('login.github');
 
 // 首页
 Route::get('/', [ForumController::class,'index'])
@@ -78,6 +81,10 @@ Route::namespace('Admin')
     ->group(function(){
         Route::get('/panel',[ForumsController::class,'index'])->name('panel');
         Route::post('execsql',[ForumsController::class,'execSQL'])->name('execsql');
+});
+
+Route::get('/test',function (){
+   return 134;
 });
 
 
