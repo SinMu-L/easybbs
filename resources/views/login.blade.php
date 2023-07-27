@@ -61,7 +61,7 @@
         </table>
     </form>
 
-    <a href="https://github.com/login/oauth/authorize?client_id={{env('GITHUB_CLIENT_ID')}}">
+    <a href="https://github.com/login/oauth/authorize?client_id={{env('GITHUB_CLIENT_ID')}}&scope=user">
 
     <svg id="github" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true">
         <path fill-rule="evenodd"
